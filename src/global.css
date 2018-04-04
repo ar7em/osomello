@@ -1,0 +1,7 @@
+@reset-global pc;
+
+html,
+body,
+:global(#root) {
+  height: 100%;
+};

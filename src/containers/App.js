@@ -3,6 +3,9 @@ import PropTypes  from "prop-types";
 import { connect } from "react-redux";
 import * as listsActions from "actions/lists";
 import * as tasksActions from "actions/tasks";
+import Logo from "components/Logo";
+import Layout from "components/Layout";
+import Board from "containers/Board";
 
 class App extends Component {
   componentDidMount() {
@@ -12,7 +15,14 @@ class App extends Component {
 
   render() {
     return (
-      <div>Hello, world</div>
+      <Layout.Wrapper>
+        <Layout.Header>
+          <Logo />
+        </Layout.Header>
+        <Layout.Content>
+          <Board />
+        </Layout.Content>
+      </Layout.Wrapper>
     );
   }
 }

@@ -7,6 +7,8 @@ import App from "containers/App";
 import request from "middleware/request";
 import rootReducer from "reducers/root";
 
+import "global.css";
+
 const store = createStore(
   rootReducer,
   composeWithDevTools(
