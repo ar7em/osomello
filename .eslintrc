@@ -1,0 +1,20 @@
+{
+  "parser": "babel-eslint",
+  "plugins": [
+    "react"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "env": {
+    "es6": true,
+    "browser": true
+  },
+  "rules": {
+    "no-var": 2,
+    "semi": 2,
+    "quotes": ["error", "double"],
+    "indent": ["error", 2,  {"SwitchCase": 1}]
+  }
+}
