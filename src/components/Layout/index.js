@@ -20,5 +20,6 @@ const makeComponent = (className) => {
 export default {
   Wrapper: makeComponent(style.Layout),
   Content: makeComponent(style.Layout__Content),
-  Header:makeComponent(style.Layout__Header)
+  Header: makeComponent(style.Layout__Header),
+  Modal: makeComponent(style.Layout__Modal)
 };

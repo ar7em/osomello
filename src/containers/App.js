@@ -6,6 +6,8 @@ import * as tasksActions from "actions/tasks";
 import Logo from "components/Logo";
 import Layout from "components/Layout";
 import Board from "containers/Board";
+import Edit from "containers/Edit";
+import { editTask } from "selectors/tasks";
 
 class App extends Component {
   componentDidMount() {
@@ -16,6 +18,12 @@ class App extends Component {
   render() {
     return (
       <Layout.Wrapper>
+        {
+          this.props.editTask &&
+          <Layout.Modal>
+            <Edit task={this.props.editTask} />
+          </Layout.Modal>
+        }
         <Layout.Header>
           <Logo />
         </Layout.Header>
@@ -29,12 +37,17 @@ class App extends Component {
 
 App.propTypes = {
   retrieveLists: PropTypes.func.isRequired,
-  retrieveTasks: PropTypes.func.isRequired
+  retrieveTasks: PropTypes.func.isRequired,
+  editTask: PropTypes.object
 };
+
+export const mapStateToProps = (state) => ({
+  editTask: editTask(state)
+});
 
 export const mapDispatchToProps = (dispatch) => ({
   retrieveLists: () => dispatch(listsActions.retrieve()),
   retrieveTasks: () => dispatch(tasksActions.retrieve())
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
