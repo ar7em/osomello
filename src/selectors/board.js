@@ -8,6 +8,6 @@ export const listsWithTasks = createSelector(
   (lists, tasks) => lists
     .map(list => ({
       ...list,
-      tasks: tasks.filter(task => task.listId == list.id)
+      tasks: tasks.filter(task => task.listId === list.id)
     }))
 );

@@ -30,8 +30,8 @@ render(
       }
 
       const taskId = result.draggableId;
-      const fromList = result.source.droppableId;
-      const toList = result.destination.droppableId;
+      const fromList = parseInt(result.source.droppableId, 10);
+      const toList = parseInt(result.destination.droppableId, 10);
       const startPosition = result.source.index;
       const endPosition = result.destination.index;
 

@@ -61,5 +61,5 @@ export const checkUpdates = () => (dispatch, getState) => {
       {"id": null, "position": null, "listId": firstList.id, "name": new Date().toLocaleString()}
     ]));
     dispatch(checkUpdates());
-  }, getRandomInterval(1, 2));
+  }, getRandomInterval(5, 10));
 };

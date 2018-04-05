@@ -2,7 +2,6 @@ import { TASKS_ADD, TASKS_EDIT, TASKS_CANCEL_EDIT, TASKS_RENAME, TASKS_REORDER }
 
 const initialState = {
   all: [],
-  byLists: {},
   edit: null
 };
 
@@ -37,13 +36,13 @@ const normalizePosition = (tasks) => (
 );
 
 const reorder = (tasks, _id, fromList, toList, startPosition, endPosition) => {
-  const destinationList = tasks.filter((task) => task.listId == toList);
+  const destinationList = tasks.filter((task) => task.listId === toList);
   let sourceList;
 
   if (toList === fromList) {
     sourceList = destinationList;
   } else {
-    sourceList = tasks.filter((task) => task.listId == fromList);
+    sourceList = tasks.filter((task) => task.listId === fromList);
   }
 
   destinationList.splice(endPosition, 0, sourceList.splice(startPosition, 1)[0]);
