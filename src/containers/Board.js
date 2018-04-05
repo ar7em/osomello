@@ -15,11 +15,13 @@ const Board = (props) => (
           {...provided.droppableProps}
         >
           <Column list={list}>
-            {
-              list.tasks.map(task => <Task key={task._id} task={task} />)
-            }
+            <div>
+              {
+                list.tasks.map(task => <Task key={task._id} task={task} />)
+              }
+              { provided.placeholder }
+            </div>
           </Column>
-          { provided.placeholder }
         </div>
       )}
     </Droppable>
