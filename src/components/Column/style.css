@@ -2,6 +2,8 @@
   background: #e2e4e6;
   padding: 8px 8px 8px 8px;
   border-radius: 3px;
+  margin: 0 10px;
+  min-width: 150px;
 
   &__name {
     font-weight: bold;
@@ -10,7 +12,7 @@
     margin-bottom: 8px;
   }
 
-  & + & {
-    margin-left: 10px;
+  &--dragging {
+    background: red !important;
   }
 }

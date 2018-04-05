@@ -1,13 +1,13 @@
 import { createSelector } from "reselect";
 import { sortedLists } from "selectors/lists";
-import { sortedTasks } from "selectors/tasks";
+import { tasksByLists } from "selectors/tasks";
 
 export const listsWithTasks = createSelector(
   sortedLists,
-  sortedTasks,
+  tasksByLists,
   (lists, tasks) => lists
     .map(list => ({
       ...list,
-      tasks: tasks.filter(task => task.listId === list.id)
+      tasks: tasks[list.id] || []
     }))
 );

@@ -1,17 +1,28 @@
 import React from "react";
 import PropTypes  from "prop-types";
 import { connect } from "react-redux";
+import { Droppable } from "react-beautiful-dnd";
 import { listsWithTasks } from "selectors/board";
 import Task from "containers/Task";
 import Column from "components/Column";
 
 const Board = (props) => (
   props.lists.map(list => (
-    <Column key={list.id} list={list}>
-      {
-        list.tasks.map(task => <Task key={task._id} task={task} />)
-      }
-    </Column>
+    <Droppable key={list.id} droppableId={list.id.toString()}>
+      {(provided) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+        >
+          <Column list={list}>
+            {
+              list.tasks.map(task => <Task key={task._id} task={task} />)
+            }
+          </Column>
+          { provided.placeholder }
+        </div>
+      )}
+    </Droppable>
   ))
 );
 

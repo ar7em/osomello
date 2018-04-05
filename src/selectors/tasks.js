@@ -1,18 +1,18 @@
 import { createSelector } from "reselect";
 
-export const sortedTasks = createSelector(
+export const tasksByLists = createSelector(
   state => state.tasks.all,
-  (tasks) => tasks
-    .map((task, index) => ({...task, _id: index}))
-    .sort((a, b) => {
-      const priority = a.position - b.position;
+  state => state.tasks.byLists,
+  (all, byLists) => {
+    const listsWithIds = Object.keys(byLists);
+    const getTaskById = _id => all.find(task => task._id === _id);
+    const listsWithTasks = listsWithIds.reduce((acc, listId) => {
+      acc[listId] = byLists[listId].map((_id, index) => ({...getTaskById(_id), position: index}));
+      return acc;
+    }, {});
 
-      if (priority) {
-        return priority;
-      }
-
-      return a._id - b._id;
-    })
+    return listsWithTasks;
+  }
 );
 
 export const editTask = createSelector(

@@ -3,6 +3,7 @@ export const TASKS_ADD = "TASKS_ADD";
 export const TASKS_EDIT = "TASKS_EDIT";
 export const TASKS_RENAME = "TASKS_RENAME";
 export const TASKS_CANCEL_EDIT = "TASKS_CANCEL_EDIT";
+export const TASKS_REORDER = "TASKS_REORDER";
 
 export const retrieve = () => ({
   type: TASKS_RETRIEVE,
@@ -37,5 +38,16 @@ export const rename = (_id, name) => ({
   payload: {
     _id,
     name
+  }
+});
+
+export const reorder = (_id, fromList, toList, startPosition, endPosition) => ({
+  type: TASKS_REORDER,
+  payload: {
+    _id,
+    fromList,
+    toList,
+    startPosition,
+    endPosition
   }
 });

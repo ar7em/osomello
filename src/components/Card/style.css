@@ -6,13 +6,10 @@
   max-width: 250px;
   color: #444;
   font-size: 14px;
+  margin: 6px 0;
 
   &:hover {
     background: #edeff0;
     border-color: #d6dadc;
-  }
-
-  & + & {
-    margin-top: 6px;
   }
 }
