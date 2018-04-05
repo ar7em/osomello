@@ -15,7 +15,9 @@ const Card = (props) => (
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          { props.task.name }
+          <div className={style.Card__content}>
+            { props.task.name }
+          </div>
         </div>
         { provided.placeholder }
       </div>

@@ -13,6 +13,7 @@ class App extends Component {
   componentDidMount() {
     this.props.retrieveLists();
     this.props.retrieveTasks();
+    this.props.checkUpdates();
   }
 
   render() {
@@ -47,7 +48,8 @@ export const mapStateToProps = (state) => ({
 
 export const mapDispatchToProps = (dispatch) => ({
   retrieveLists: () => dispatch(listsActions.retrieve()),
-  retrieveTasks: () => dispatch(tasksActions.retrieve())
+  retrieveTasks: () => dispatch(tasksActions.retrieve()),
+  checkUpdates: () => dispatch(tasksActions.checkUpdates())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

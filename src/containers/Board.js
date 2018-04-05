@@ -17,7 +17,7 @@ const Board = (props) => (
           <Column list={list}>
             <div>
               {
-                list.tasks.map(task => <Task key={task._id} task={task} />)
+                list.tasks.map((task, index) => <Task key={index} task={task} />)
               }
               { provided.placeholder }
             </div>

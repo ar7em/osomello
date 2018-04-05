@@ -8,33 +8,65 @@ const initialState = {
 
 const normalizeIds = (tasks) => (
   tasks
-    .map((task, index) => ({...task, _id: index}))
+    .map((task, index) => ({...task, _id: task._id || index}))
 );
 
-const distributeByLists = (tasks) => (
+const normalizePosition = (tasks) => (
   tasks
-    .sort((a, b) => a.position - b.position)
-    .reduce((acc, task) => {
-      if (!acc[task.listId]) {
-        acc[task.listId] = [];
+    .sort((a, b) => {
+      if (typeof a.position !== "number") {
+        return 1;
       }
 
-      acc[task.listId].push(task._id);
+      if (typeof b.position !== "number") {
+        return -1;
+      }
 
-      return acc;
-    }, {})
+      return (a.position - b.position);
+    })
+    .map((task, index, all) => {
+      const sameListId = all.filter((item) => item.listId === task.listId);
+      let position = sameListId.indexOf(task);
+
+      if (position < 0) {
+        position = sameListId.length;
+      }
+
+      return ({...task, position: position});
+    })
 );
 
-const reorder = (lists, _id, fromList, toList, startPosition, endPosition) => {
-  lists[fromList] = lists[fromList].filter((taskId) => taskId !== _id);
+const reorder = (tasks, _id, fromList, toList, startPosition, endPosition) => {
+  const destinationList = tasks.filter((task) => task.listId == toList);
+  let sourceList;
 
-  if (lists[toList]) {
-    lists[toList].splice(endPosition, 0, _id);
+  if (toList === fromList) {
+    sourceList = destinationList;
   } else {
-    lists[toList] = [_id];
+    sourceList = tasks.filter((task) => task.listId == fromList);
   }
 
-  return lists;
+  destinationList.splice(endPosition, 0, sourceList.splice(startPosition, 1)[0]);
+
+  return tasks
+    .map((task) => {
+      if (task._id === _id) {
+        task.listId = toList;
+      }
+
+      let newPosition = destinationList.indexOf(task);
+
+      if (newPosition <= -1) {
+        newPosition = sourceList.indexOf(task);
+      }
+
+      if (newPosition > -1) {
+        task.position = newPosition;
+      }
+
+      return task;
+    })
+    .sort((a, b) => a.position - b.position);
 };
 
 export default (state = initialState, action) => {
@@ -42,10 +74,9 @@ export default (state = initialState, action) => {
 
   switch (type) {
     case TASKS_ADD: {
-      const tasks = normalizeIds(payload.tasks);
+      const tasks = normalizePosition(normalizeIds(state.all.concat(payload.tasks)));
       return Object.assign({}, state, {
-        all: normalizeIds(tasks),
-        byLists: distributeByLists(tasks)
+        all: tasks
       });
     }
     case TASKS_EDIT:
@@ -68,13 +99,7 @@ export default (state = initialState, action) => {
       });
     case TASKS_REORDER:
       return Object.assign({}, state, {
-        all: state.all.map((task) => {
-          if (payload._id === task._id) {
-            task.listId = payload.toList;
-          }
-          return task;
-        }),
-        byLists: reorder(state.byLists, payload._id, payload.fromList, payload.toList, payload.startPosition, payload.endPosition)
+        all: reorder(state.all, payload._id, payload.fromList, payload.toList, payload.startPosition, payload.endPosition)
       });
     default:
       return state;

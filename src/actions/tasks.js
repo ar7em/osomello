@@ -51,3 +51,15 @@ export const reorder = (_id, fromList, toList, startPosition, endPosition) => ({
     endPosition
   }
 });
+
+const getRandomInterval = (min, max) => Math.floor(Math.random() * (max - min + 1) + min) * 1000;
+
+export const checkUpdates = () => (dispatch, getState) => {
+  setTimeout(() => {
+    const firstList = getState().lists.all[0] || {};
+    dispatch(add([
+      {"id": null, "position": null, "listId": firstList.id, "name": new Date().toLocaleString()}
+    ]));
+    dispatch(checkUpdates());
+  }, getRandomInterval(1, 2));
+};

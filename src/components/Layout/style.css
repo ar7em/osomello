@@ -1,13 +1,8 @@
-:global(html),
-:global(body){
-
-}
-
 .Layout {
   display: flex;
   align-items: stretch;
   align-content: stretch;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   flex-direction: column;
   height: 100%;
   background: #0079bf;

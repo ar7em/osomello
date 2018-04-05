@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { DragDropContext } from "react-beautiful-dnd";
+import thunk from "redux-thunk";
 import * as tasksActions from "actions/tasks";
 import App from "containers/App";
 import request from "middleware/request";
@@ -15,7 +16,8 @@ const store = createStore(
   rootReducer,
   composeWithDevTools(
     applyMiddleware(
-      request
+      request,
+      thunk
     )
   )
 );
@@ -23,6 +25,10 @@ const store = createStore(
 render(
   <DragDropContext
     onDragEnd={result => {
+      if (!(result && result.destination && result.source)) {
+        return;
+      }
+
       const taskId = result.draggableId;
       const fromList = result.source.droppableId;
       const toList = result.destination.droppableId;
