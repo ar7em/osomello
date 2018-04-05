@@ -39,7 +39,8 @@ class App extends Component {
 App.propTypes = {
   retrieveLists: PropTypes.func.isRequired,
   retrieveTasks: PropTypes.func.isRequired,
-  editTask: PropTypes.object
+  editTask: PropTypes.object,
+  checkUpdates: PropTypes.func.isRequired
 };
 
 export const mapStateToProps = (state) => ({
